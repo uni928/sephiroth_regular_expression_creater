@@ -1,0 +1,180 @@
+<html>
+  <head>
+    <title>正規表現入力補助サイト(自動生成 or チェック機能無し) | Gifted Style</title>
+    <meta name="description" content="正規表現の入力補助サイトです。自動生成 or チェック機能はありません。正規表現で使用する記号がボタンで下に並んでいるため、初心者の方が一覧を見ながら入力できます。短い説明で分からない記号があれば詳細の説明文を表示できます。"/>
+  </head>
+<body>
+  このサイトは正規表現の入力を補助するサイトです。</br>入力欄の下に正規表現で使う文字の一覧がボタンで存在します。</br>ボタンを押すことで実際に入力もできます。</br>"[" の後に "]" を入力すると入力場所が間に移動します。</br>キーボードの Ctrl キーを押しながらボタンを押すことで、説明文を見る事ができます。</br></br>
+  <textarea id="textbox" rows="15" cols="120"></textarea></br></br>
+  <button onclick="Button1()">[0-9] 全ての数値</button>
+  <button onclick="Button2()">[0-9a-zA-Z] 半角英数字アルファベット</button>
+  <button onclick="Button3()">[ -~] 半角英数字と半角記号</button>
+  <button onclick="Button4()">[ぁ-んー] 全角ひらがな</button>
+  <button onclick="Button5()">[ァ-ンヴー] 全角カタカナ</button></br><font size="1"></br></font>
+  <button onclick="Button7()">[] []内に指定した文字列のどれかと一致</button>
+  <button onclick="Button8()">[^] []内に指定した文字でない場合に一致する</button></br><font size="1"></br></font>
+  <button onclick="Button9()">^ 行頭と一致</button>
+  <button onclick="Button10()">$ 行末と一致</button>
+  <button onclick="Button11()">. 任意の１文字と一致</button>
+  <button onclick="Button12()">+ 直前のパターンの1回以上繰り返し（最長一致）</button></br><font size="1"></br></font>
+  <button onclick="Button13()">? 直前のパターンの0～1回繰り返し（最長一致）</button>
+  <button onclick="Button14()">{m,n} 直前のパターンのm回からn回繰り返し（最長一致）</button></br><font size="1"></br></font>
+  <button onclick="Button15()">+? 直前のパターンの1回以上繰り返し（最短一致）</button>
+  <button onclick="Button16()">*? 直前のパターンの0回以上繰り返し（最短一致）</button></br><font size="1"></br></font>
+  <button onclick="Button17()">?? 直前のパターンの0～1回繰り返し（最短一致）</button>
+  <button onclick="Button18()">* 直前のパターンの0回以上繰り返し（最長一致）</button>
+  <button onclick="Button19()">{m,n}? 直前のパターンのm回からn回繰り返し（最短一致）</button></br><font size="1"></br></font>
+  <button onclick="Button20()">\ 直後のメタ文字をエスケープする</button>
+  <button onclick="Button21()">\A 文字列の先頭と一致</button>
+  <button onclick="Button22()">\b 単語境界と一致(\w と \W の間の文字列と一致)</button>
+  <button onclick="Button23()">\B \b以外と一致</button>
+  <button onclick="Button24()">\d 数字と一致([0-9]と同じ)</button></br><font size="1"></br></font>
+  <button onclick="Button25()">\D \d以外と一致</button>
+  <button onclick="Button26()">\s 空白文字と一致</button>
+  <button onclick="Button27()">\S \s以外と一致</button>
+  <button onclick="Button28()">\w 英数字とアンダースコア_に一致</button>
+  <button onclick="Button29()">\W \w以外と一致</button>
+  <button onclick="Button30()">\Z 文字列の末尾と一致</button></br></br>参考サイト：</br><a href="https://www.megasoft.co.jp/mifes/seiki/meta.html" target="blank">https://www.megasoft.co.jp/mifes/seiki/meta.html</a>
+  <script>
+  function OnChangeFunction() {
+    const textarea = document.getElementById("textbox");
+    if(textarea.selectionStart < 2) {
+      return;
+    }
+
+    if(textarea.value.substring(textarea.selectionStart - 2, textarea.selectionStart - 1) == "[" && textarea.value.substring(textarea.selectionStart - 1, textarea.selectionStart) == "]" && textarea.selectionEnd - textarea.selectionStart == 0) {
+      textarea.selectionStart = textarea.selectionStart - 1;
+      textarea.selectionEnd = textarea.selectionEnd - 1;
+    }
+  }
+  function Button1() {
+    Exec('[0-9]', "この項目は説明がありません。");
+  }
+  function Button2() {
+    Exec('[0-9a-zA-Z]', "この項目は説明がありません。");
+  }
+  function Button3() {
+    Exec('[ -~]', "この項目は説明がありません。");
+  }
+  function Button4() {
+    Exec('[ぁ-んー]', "この項目は説明がありません。");
+  }
+  function Button5() {
+    Exec('[ァ-ンヴー]', "この項目は説明がありません。");
+  }
+  function Button6() {
+    Exec('[ぁ-んー]', "日本語 1 文字に一致。\n\n空白文字を省きたい場合は後ろの\"\\s　\"を省いて下さい。");
+  }
+  function Button7() {
+    Exec('[]', "括弧内のいずれか1文字\r\n例1）[ABC] → A、B、C のいずれかにマッチ\r\n例2）[A-G] → A、B、C、D、E、F、G のいずれかにマッチ\r\n例3）[０-９] → 全角数字\r\n例4）[Ａ-Ｚ]+ → 全角英大文字列\r\n例5）[ぁ-ん] → ひらがな\r\n例6）[ァ-ヴ] → カタカナ\r\n例7）[ｦ-ﾟ] → 半角ｶﾀｶﾅ\r\n例8）[一二三四五六七八九十壱弐参拾百千万萬億兆〇]+ → 漢数字列\r\n例9）[0-9A-F]{2} → 0-9とA-Fのいずれかの2文字（2桁の16進数）");
+    const textarea = document.getElementById("textbox");
+    textarea.selectionStart = textarea.selectionStart - 1;
+    textarea.selectionEnd = textarea.selectionEnd - 1;
+  }
+  function Button8() {
+    Exec('[^]', "括弧内に含まれない1文字\r\n例1）[^ABC] → A、B、C 以外のいずれかにマッチ\r\n例2）[^A-G] → A、B、C、D、E、F、G 以外のいずれかにマッチ\r\n例3）[^\\u\\l] → 半角英字以外");
+    const textarea = document.getElementById("textbox");
+    textarea.selectionStart = textarea.selectionStart - 1;
+    textarea.selectionEnd = textarea.selectionEnd - 1;
+  }
+  function Button9() {
+    Exec('^', "論理行頭\r\n例1）^○ → 行頭の○\r\n例2）^\\x20+ → 行頭の半角スペースの連続\r\n例3）^\\n → 空白行\r\n例4）^.*$ → 行全体\r\n例5）^　>\\x20 → 行頭に「> 」を挿入");
+  }
+  function Button10() {
+    Exec('$', "\t\r\n論理行末\r\n例1）。$ → 行末の。\r\n例2）^.*$ → 行全体");
+  }
+  function Button11() {
+    Exec('.', "\t\r\n任意の1文字\r\n例1）A.C → ABC、A1C、AあC などにマッチ\r\n例2）b.k → bから始まってkで終わる3桁の文字列");
+  }
+  function Button12() {
+    Exec('+', "直前のパターンの1回以上繰り返し（最長一致）\r\n例1）ABC+ → ABC、ABCCCCCC などにマッチ\r\n例2）b.+k → bから始まってkで終わる3桁以上の文字列");
+  }
+  function Button13() {
+    Exec('?', "\t\r\n直前のパターンの0～1回繰り返し（最長一致）\r\n例）ABC? → AB、ABC にマッチ");
+  }
+  function Button14() {
+    Exec('{m,n}', "直前のパターンのm回からn回繰り返し（最長一致）\r\n例1）ABC{3,5} → ABCCC、ABCCCC、ABCCCCC にマッチ\r\n例2）0\\d{1,4}-\\d{1,4}-\\d{4} → 電話番号\r\n例3）\\d{4}[/\\.年]\\d{1,2}[/\\.月]\\d{1,2}日? → 日付");
+  }
+  function Button15() {
+    Exec('+?', "直前のパターンの1回以上繰り返し（最短一致）\r\n例1）ABC+? → ABC にマッチ\r\n例2）\\b[Ww]h.+?\\b → whで始まる3文字以上の単語");
+  }
+  function Button16() {
+    Exec('*?', "\t\r\n直前のパターンの0回以上繰り返し（最短一致）\r\n例1）ABC*? → AB にマッチ\r\n例2）<[hH][1-3].*?> → 見出しタグ開始（h1～h3まで）");
+  }
+  function Button17() {
+    Exec('??', "直前のパターンの0～1回繰り返し（最短一致）\r\n例1）ABC?? → AB にマッチ");
+  }
+  function Button18() {
+    Exec('*', "直前のパターンの0回以上繰り返し（最長一致）\r\n例1）ABC* → AB、ABC、ABCCCCCC などにマッチ\r\n例2）b.*k → bから始まってkで終わる2桁以上の文字列");
+  }
+  function Button19() {
+    Exec('{m,n}?', "直前のパターンのmin回からmax回繰り返し（最短一致）\r\n例1）ABC{3,5}? → ABCCC にマッチ\r\n例2）\\d{4,10}? → 4～10桁の数字（最短一致）");
+  }
+  function Button20() {
+    Exec('\\', "\t\r\n直後のメタ文字をエスケープする\r\n（直後の文字を正規表現の記号（メタ文字）として扱わないことを指定）\r\n例）\\\\ → 文字の「\\」にマッチ");
+  }
+  function Button21() {
+    Exec('\\A', "この項目は説明がありません。");
+  }
+  function Button22() {
+    Exec('\\b', "語の区切り位置\r\n例）\\bam\\b → amという単語");
+  }
+  function Button23() {
+    Exec('\\B', "語の区切り位置以外\r\n例）\\Bam\\B → 単語の途中にあるam");
+  }
+  function Button24() {
+    Exec('\\d', "\t\r\nすべての半角数字\r\n例1）\\d → 半角数字\r\n例2）\\d+ → 数字列\r\n例3）\\d{4} → 4桁の数字\r\n例4）\\d{4,} → 4桁以上の数字\r\n例5）\\d{1,4,} → 4桁までの数字（1～4桁の数字）\r\n例6）\\d{4,10} → 4～10桁の数字（最長一致）\r\n例7）\\d{4,10}? → 4～10桁の数字（最短一致）\r\n例8）\\d*[135791]\\b → 奇数\r\n例9）\\b\\d{1,3}(,\\d{3})*\\b → 桁区切りのカンマ付数字列\r\n例10）\\\\\\d{1,3}(,\\d{3})*\\b → 価格（先頭が「\\」の桁区切り付数字列）\r\n例11）(〒|ZIP：)\\d{3}-\\d{4} → 郵便番号\r\n例12）0\\d{1,4}-\\d{1,4}-\\d{4} → 電話番号\r\n例13）0[89]0\\d{8} → 携帯電話番号(ハイフンなし)\r\n例14）\\d{4}[/\\.年]\\d{1,2}[/\\.月]\\d{1,2}日? → 日付");
+  }
+  function Button25() {
+    Exec('\\D', "半角数字以外すべて\r\n例）\\D → 半角数字以外");
+  }
+  function Button26() {
+    Exec('\\s', "空白文字（半角スペース、\\t、\\n、\\r、\\f）すべて\r\n例）\\s → 空白文字");
+  }
+  function Button27() {
+    Exec('\\S', "空白文字（半角スペース、\t、\n、\r、\f）以外すべて");
+  }
+  function Button28() {
+    Exec('\\w', "すべての半角英数字とアンダースコア\r\n例1）[\\w.\\-]+@[\\w\\-]+\\.[\\w.\\-]+ → メールアドレス\r\n例2）https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+ → URL（ホームページアドレス）");
+  }
+  function Button29() {
+    Exec('\\W', "半角英数字とアンダースコア以外すべて");
+  }
+  function Button30() {
+    Exec('\\Z', "この項目は説明がありません。");
+  }
+  function Exec(word, sayText){
+    if (event.ctrlKey) {
+      alert(sayText);
+      return;
+    }
+    const textarea = document.getElementById("textbox");
+
+    if(0 < textarea.selectionLength) {
+      return;
+    }
+
+    var sentence = textarea.value;
+    var len      = sentence.length;
+    var pos      = textarea.selectionStart;
+
+    var before   = sentence.substr(0, pos);
+    var word     = word;
+    var after    = sentence.substr(pos, len);
+
+    sentence = before + word + after;
+
+    textarea.value = sentence;
+    textarea.focus();
+    textarea.selectionStart = before.length + word.length;
+    textarea.selectionEnd = before.length + word.length;
+
+    localStorage.SephirothRegularExpressionCreater = textarea.value;
+  }
+  const textarea = document.getElementById("textbox");
+  textarea.addEventListener("keyup", (e) => {
+    OnChangeFunction();
+  });
+  </script>
+</body>
+</html>
